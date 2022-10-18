@@ -1,5 +1,4 @@
 from datetime import datetime
-import time
 print ("--------------------------------------")
 
 seconds = int(input("Enter count of seconds: "))
