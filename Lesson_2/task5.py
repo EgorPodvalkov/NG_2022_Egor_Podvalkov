@@ -1,7 +1,3 @@
-from asyncio.windows_events import INFINITE
-from cmath import inf
-
-
 print("***********************************************")
 
 myStr=(input("Enter your list (use ', '): "))
