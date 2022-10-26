@@ -1,13 +1,13 @@
 print("***********************************************")
 
-n=int(input("Enter number: "))
-i=n
-while i>0:
-    j=i
-    while j>0:
-        print (j, end=" ")
-        j-=1
-    i-=1
+inputValue=int(input("Enter number: "))
+
+while inputValue>0:
+    outputValue=inputValue
+    while outputValue>0:
+        print(outputValue,end=" ")
+        outputValue-=1
+    inputValue-=1
     print("")
 
 
