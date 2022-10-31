@@ -11,51 +11,51 @@ def askOperation():
     return input("Enter operation(+, -, *, /, pow, root):")
 
 def getInput():
-    a=askNumber()
+    num1=askNumber()
     operation=askOperation()
-    b=askNumber()
-    return a, operation, b
+    num2=askNumber()
+    return num1, operation, num2
 
-def add(a,b):
-    return a + b
+def add(num1,num2):
+    return num1 + num2
 
-def sub(a,b):
-    return a - b
+def sub(num1,num2):
+    return num1 - num2
 
-def mult(a,b):
-    return a * b
+def mult(num1,num2):
+    return num1 * num2
 
-def divide(a,b):
+def divide(num1,num2):
     try:    
-        return a / b
+        return num1 / num2
     except ZeroDivisionError as e:
         err(e)
         return "Infitity"
 
-def pow(a,b):
-    return a**b
+def pow(num1,num2):
+    return num1**num2
 
-def root(a,b): 
+def root(num1,num2): 
     try:
-        return a**(1/b)
+        return num1**(1/num2)
     except ZeroDivisionError as e:
         err(e)
         return "Infitity"
 
-def calculate(a, operation, b):
+def calculate(num1, operation, num2):
     match operation:
         case '+': 
-            info(f"{a} + {b} = "+str(add(a, b)))
+            info(f"{num1} + {num2} = "+str(add(num1, num2)))
         case '-': 
-            info(f"{a} - {b} = "+str(sub(a, b)))
+            info(f"{num1} - {num2} = "+str(sub(num1, num2)))
         case '*': 
-            info(f"{a} * {b} = "+str(mult(a, b)))
+            info(f"{num1} * {num2} = "+str(mult(num1, num2)))
         case '/': 
-            info(f"{a} / {b} = "+str(divide(a, b)))
+            info(f"{num1} / {num2} = "+str(divide(num1, num2)))
         case 'pow':
-            info(f"{a} ^ {b} = "+str(pow(a, b)))
+            info(f"{num1} ^ {num2} = "+str(pow(num1, num2)))
         case 'root': 
-            info(f"{a} root {b} = "+str(root(a, b)))
+            info(f"{num1} root {num2} = "+str(root(num1, num2)))
         case _: err(str(operation) + " - is not an operation")
 
 
@@ -63,8 +63,8 @@ def calculate(a, operation, b):
 def main():
     separator()
 
-    a, operation, b=getInput()
-    calculate(a, operation, b)
+    num1, operation, num2=getInput()
+    calculate(num1, operation, num2)
 
     separator()
 
