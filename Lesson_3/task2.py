@@ -43,9 +43,9 @@ def numberOfEachSymbol(string):
 def vowelsOrConsonants(string):
     try:
         vowels=int(input("Enter 1 for vowels, 0 for consonants: "))
-        if vowels is 1:
+        if vowels == 1:
             vowels=True
-        elif vowels is 0:
+        elif vowels == 0:
             vowels=False
         else:
             raise ValueError(str(vowels) + " - no such operation")
