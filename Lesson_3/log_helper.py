@@ -1,5 +1,5 @@
 def separator():
-    print("fffffffffffffffffffffffffffffffffffffffffffff")
+    print("fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
 
 def log(type, message):
     print(str(type) + ": " + str(message))
