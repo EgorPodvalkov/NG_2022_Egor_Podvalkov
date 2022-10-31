@@ -1,21 +1,14 @@
 print("***********************************************")
 
-myStr=(input("Enter your list (use ', '): "))
-lst=myStr.split(", ")
+myStr=(input("Enter your list (use ','): "))
+lst=list(map(int,myStr.split(",")))
 
-max=int(lst[0])
-min=int(lst[0])
-sum=-2*int(lst[0])
+max=max(lst)
+min=min(lst)
+sum=0
 
 for item in lst:
-    item=int(item)
-    if item>=max:
-        sum+=max
-        max=item
-    elif item<=min:
-        sum+=min
-        min=item
-    else:
+    if item!=max and item!=min:
         sum+=item
 
 print(f"Max is {max}")        
