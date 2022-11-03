@@ -17,9 +17,7 @@ def cardChecker(card):
         return "INVALID"
     
     try:
-        cardLst=[]
-        for item in card:
-            cardLst.append(int(item))
+        cardLst=list(map(int,card))
     except:
         return "INVALID"
 
