@@ -1,7 +1,7 @@
 print("***********************************************")
 
-myStr="aabcDafFeEeeca/..A,,"
-# myStr=input("Enter your string: ")
+# myStr="aabcDafFeEeeca/..A,,"
+myStr=input("Enter your string: ")
 
 dct={}
 for elem in myStr:
