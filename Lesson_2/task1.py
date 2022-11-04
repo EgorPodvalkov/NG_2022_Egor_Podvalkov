@@ -1,15 +1,13 @@
 print("***********************************************")
 
-# myStr="aabcDafFeEeeca/..A,,"
-myStr=input("Enter your string: ")
+myStr="aabcDafFeEeeca/..A,,"
+# myStr=input("Enter your string: ")
 
 dct={}
 for elem in myStr:
-    elem=elem.upper()
-    if elem>"Z" or elem<"A" or elem in dct.keys():
+    if elem.upper()>"Z" or elem.upper()<"A" or elem in dct.keys():
         continue
     dct[elem]=myStr.count(elem)
-    dct[elem]+=myStr.count(elem.lower())
 
 print("The list of your letters:")
 for key in dct.keys():
