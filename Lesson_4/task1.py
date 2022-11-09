@@ -1,5 +1,7 @@
 import platform as plt
 import psutil
+from readchar import readchar
+from os import system
 
 def architectureInfo(): #a
     return "Architecture: "+str(plt.architecture())+"\n\n"
@@ -71,8 +73,10 @@ def writeToFileController(dct):
     if dct["j"][1]:
         dataFile.write(diskInfo())
     dataFile.close
+    print("Success!")
 
 def menuController(dct):
+    system("cls")               #clearing console
     for key in dct.keys():      #output menu
         if dct[key][1]:
             indicator = "\t(yes)"
@@ -81,12 +85,14 @@ def menuController(dct):
         print(key+") "+dct[key][0]+indicator)
     print("y) Proceed")
 
-    string=input("Choose variants what you want to add or to del: ")
+    print("Choose variants what you want to add or to del: ")
+    char=readchar()
     for key in dct.keys():      #analyze input 
-        if key in string:
+        if key == char:
             dct[key][1] = not dct[key][1]
+            return menuController(dct)
 
-    if "y" in string:           #proceed program
+    if "y" == char:             #proceed program
         return dct
     else:
         return menuController(dct)
