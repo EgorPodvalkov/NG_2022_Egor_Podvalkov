@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator</title>
+    </head>
+    <body style="background-color: #9fc3ec;font-family:verdana;">
+        <h2>Calculator</h2>
+        <form action="/process">
+            <input name="data" type="text" id="data"
+            style="background: #cddff1; border-width: 1px;" 
+            size="11px">
+            <button>=</button>
+        </form>
+        <p>Result: {{contents}}</p>
+        <div>
+            <p>Operations:</p>
+            <button onclick="addSymbol(' + ')">+</button>
+            <button onclick="addSymbol(' - ')">-</button>
+            <button onclick="addSymbol(' * ')">*</button>
+            <button onclick="addSymbol(' / ')">/</button>
+            <button onclick="addSymbol(' ^ ')">^</button>
+            <button onclick="addSymbol(' root ')">root</button>
+            <p>
+                <b>Note!</b>
+                <ins>You can use only 1 operation!</ins>
+            </p>
+        </div>
+        <script>
+            function addSymbol(symbol){
+                document.getElementById("data").value += symbol 
+            }
+        </script>
+    </body>
+</html>
