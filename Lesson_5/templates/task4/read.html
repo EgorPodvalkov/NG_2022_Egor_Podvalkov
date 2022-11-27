@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reader</title>
+    <style>
+        a{
+            margin-left: 1%;
+            color:black;
+        }
+    </style>
+</head>
+<body style="background-color: hsl(34, 78%, 97%);color: rgb(65, 65, 65);font-family:Georgia;">
+    <h2>
+        <a href="/">Reader Page</a>
+        <a style="text-decoration:none" href="/password">Editor Page</a>
+    </h2>
+    <hr />
+    <div>
+        {{data|safe}}
+    </div>
+</body>
+</html>
