@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+        <title>superChat</title>
+        <style>
+            body{
+                background-color: rgb(21, 23, 29); 
+                color: hsl(57, 73%, 88%);
+                position: relative;
+                left: 1.5%
+            }
+            .chat_area,.send_area {
+                background-color:  rgb(27, 28, 30);
+                border: 1px solid #fcf4e921;
+                position: relative;
+                width: 90vw;
+                left: 2%;
+            }
+            .chat_area{
+                height: 75vh;
+            }
+            .send_area {
+                height: 10vh;
+            }
+            .messages::-webkit-scrollbar {
+                background:  rgba(0, 0, 0, 0.3);
+            }
+            .messages::-webkit-scrollbar-thumb {
+                background:hsla(57, 100%, 50%, 0.8);
+            }
+            .messages{
+                position: absolute;
+                right: 0;
+                left: 10px;
+                height: 75vh;
+                overflow-y: scroll;
+                overflow-x: hidden;
+            }
+            hr{
+                border-color: rgba(0, 0, 0, 0.5);
+            }
+            name{
+                color: rgb(247, 243, 222);
+                font-size: 130%;
+                font-weight: bold;
+            }
+            date{
+                color: hsla(57, 74%, 88%, 0.6);
+                font-size: 66%;
+            }
+            hr, name, date, text{
+                position: relative;
+                bottom: 10px;
+            }
+            .send_form{
+                position: absolute;
+                top: 8px;
+                left: 10px;
+                width: 96%;
+            }
+            note{
+                color: hsla(58, 100%, 90%, 0.3);
+            }
+            .name_send, .message_send, .button_send{
+                background-color:  rgb(45, 47, 51);
+                border: 1px solid #fcf4e907;
+                color: hsl(57, 73%, 88%);
+                font-size: 100%;
+                font-weight: bold;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                position: relative;
+                top: 3px;
+            }
+            .name_send{
+                width: 40%;
+            }
+            .message_send{
+                width: 90%;
+            }
+            
+        </style>
+    </head>
+    <body onload="scrollToBottom()">
+        <h1 style=" color: hsl(57, 100%, 50%);">superChat 🚀</h1>
+        <div class="chat_area">
+            <div class="messages_area">
+                <div class="messages" id="chat">
+                    {{message|safe}}
+                </div>
+            </div>
+        </div>
+        <div class="send_area">
+            <div class="send_form">
+                <input type="text" id="name" class="name_send" placeholder="Anonimus">
+                &nbsp Enter your nickname, please<note>(U will be Anonimus, if no nickname)</note><br><br>
+                <input type="text" id= "text" class="message_send" placeholder="Enter your message">
+                <button class="button_send" onclick="sendMessage()">👉</button>
+            </div>
+        </div>
+<script>
+function scrollToBottom(){
+    element = document.getElementById("chat")
+    element.scrollTop = element.scrollHeight
+}
+
+function getMessages() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        document.getElementById("chat").innerHTML = this.responseText;
+    }
+    xhttp.open("GET", "/getmessages", true);
+    xhttp.send();
+}
+
+function sendMessage(){
+    name = document.getElementById("name").value;
+    text = document.getElementById("text").value;
+    document.getElementById("text").value = "";
+    if(text == "") return;
+    if(name == "") name = "Anonimus";
+    var socket = io();
+    socket.on('connect', () =>{
+        socket.emit("send message", {'name': name, 'text': text});
+        getMessages();
+        scrollToBottom();
+    });
+}
+
+window.setInterval(() =>{
+    getMessages();
+}, 2000)
+
+document.getElementById("text").addEventListener("keydown", () =>{
+    if(event.code == 'Enter') sendMessage()
+});
+</script>
+</html>
