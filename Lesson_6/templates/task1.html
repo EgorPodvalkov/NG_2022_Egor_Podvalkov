@@ -8,7 +8,8 @@
                 background-color: rgb(21, 23, 29); 
                 color: hsl(57, 73%, 88%);
                 position: relative;
-                left: 1.5%
+                left: 1.5%;
+                overflow-x: hidden;
             }
             .chat_area,.send_area {
                 background-color:  rgb(27, 28, 30);
@@ -105,12 +106,18 @@ function scrollToBottom(){
 }
 
 function getMessages() {
+    element = document.getElementById("chat")
+    // console.log(element.scrollTop, element.clientHeight, element.scrollHeight)
+    if(element.scrollHeight - element.scrollTop === element.clientHeight) bottom = true;
+    else bottom = false
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         document.getElementById("chat").innerHTML = this.responseText;
+        if(bottom) scrollToBottom()
     }
     xhttp.open("GET", "/getmessages", true);
     xhttp.send();
+    
 }
 
 function sendMessage(){
@@ -122,8 +129,6 @@ function sendMessage(){
     var socket = io();
     socket.on('connect', () =>{
         socket.emit("send message", {'name': name, 'text': text});
-        getMessages();
-        scrollToBottom();
     });
 }
 
