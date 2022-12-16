@@ -2,10 +2,18 @@ import sqlite3
 from datetime import datetime
 from someUsefullFunctions import saveHtmlString, info, err
 
+# Some common function for db
+
 def prepareDataBaseForChat(nameDB):
     '''Prepares database for chatting'''
     connection = initConnection(nameDB)
     initTableChat(connection)
+    connection.close()
+
+def prepareDataBaseForSysInfo(nameDB):
+    '''Prepares database for system info'''
+    connection = initConnection(nameDB)
+    initTableSysInfo(connection)
     connection.close()
 
 
@@ -22,10 +30,16 @@ def initConnection(path):
 
 
 def initTableChat(connection):
-    '''Tries to create new table'''
+    '''Tries to create new table for chat'''
     sql = "CREATE TABLE IF NOT EXISTS messages( id INTEGER PRIMARY KEY, time TEXT NOT NULL, name TEXT NOT NULL, text TEXT NOT NULL)"
     connection.execute(sql)
 
+def initTableSysInfo(connection):
+    '''Tries to create new table for system info'''
+    sql = "CREATE TABLE IF NOT EXISTS sys_Info( id INTEGER PRIMARY KEY, time TEXT NOT NULL, info TEXT NOT NULL)"
+    connection.execute(sql)
+
+# Some special functions for Chat
 
 def addMessageToDB(nameDB, name: str, text: str):
     '''Adds message to db'''
@@ -39,7 +53,6 @@ def addMessageToDB(nameDB, name: str, text: str):
     connection.commit()
     connection.close()
 
-
 def getMessagesFromDB(nameDB):
     '''Extract rows from databasa'''
     connection = initConnection(nameDB)
@@ -49,7 +62,6 @@ def getMessagesFromDB(nameDB):
     rows = cursor.fetchall()
     connection.close()
     return rows
-
 
 def getMessagesInHtmlTags(nameDB):
     '''Returns nice html vision messages'''
@@ -65,3 +77,18 @@ def getMessagesInHtmlTags(nameDB):
     # <date>13.12 20:31</date><br>
     # <text>here will be first message</text>
     return result
+
+# Some special functions for SysInfo
+
+def addSysInfoToDB(nameDB, info: str):
+    '''Adds selected by user sysInfo to db'''
+    if info != "":
+        time = datetime.now().strftime("%d.%m %H:%M")
+        connection = initConnection(nameDB)
+        sql = f'INSERT INTO sys_Info(`time`, `info`) VALUES("{time}", "{info}")'
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        connection.commit()
+        connection.close()
+    
+

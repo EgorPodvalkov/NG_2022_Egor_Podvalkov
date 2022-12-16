@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>System Info</title>
+    <style>
+        body{
+            background-color: rgb(21, 23, 29); 
+            color: yellow;
+            position: relative;
+            left: 25px;
+            width: calc(100vw - 40px);
+            font-size: 130%;
+        }
+        .logo{
+            position: relative;
+            left: -15px;
+        }
+        a{
+            text-decoration: none;
+            color: yellow;
+        }
+        .form_area, .info_area{
+            position: relative;
+            float: left;
+            height: 80vh;
+            background-color: rgb(32, 35, 44);
+            border: 1px solid rgba(255, 255, 0, 0.5);
+        }
+        .form_area{
+            width: 240px;
+        }
+        button, .checkbox_area{
+            position: relative;
+            left: 20px;
+            top: 10px;
+        }
+        hr{
+            border-color: rgba(255, 255, 0, 0.5);
+            position: relative;
+            
+        }
+        .hr_form{
+            top: 10px;
+        }
+        .hr_info{
+            top: 6px;
+            left: -10px;
+            width: calc(100% + 8px);
+        }
+        button{
+            background-color: rgb(37, 36, 23);
+            color: yellow;
+            border-color: rgb(247, 253, 209);
+        }
+        .big_button{
+            width: 200px;
+            font-size: 140%;
+        }
+        .lil_button{
+            width: 100px;
+            font-size: 75%;
+        }
+        .info_area{
+            width: calc(100vw - 320px);
+            left: -1px;
+            overflow: auto;
+        }
+        .info_area::-webkit-scrollbar {
+            background:  rgba(0, 0, 0, 0.3);
+        }
+        .info_area::-webkit-scrollbar-thumb {
+            background:hsla(57, 100%, 50%, 0.8);
+        }
+        .info{
+            position: relative;
+            left: 10px;
+            top: 5px;
+            width: calc(100% - 10px);
+        }
+    </style>
+</head>
+<body onload="checkList({{ checked }})">
+    <h1 class="logo" ><a href="/">SysInfo 🤖</a></h1>
+        <div class="form_area">
+            <form action="/">
+                <button class="big_button">Get SysInfo</button>
+                <hr class="hr_form">
+                <div class="checkbox_area">
+                    <input type="checkbox" name="Architecture"> Architecture Info<br>
+                    <input type="checkbox" name="Machine"> Machine type Info<br>
+                    <input type="checkbox" name="Network"> Network name Info<br>
+                    <input type="checkbox" name="Platform"> Platform Info<br>
+                    <input type="checkbox" name="Processor"> Processor Info<br>
+                    <input type="checkbox" name="Python"> Python Info<br>
+                    <input type="checkbox" name="Boot_time"> Boot time Info<br>    
+                    <input type="checkbox" name="CPU"> CPU Info<br>    
+                    <input type="checkbox" name="Memory"> Memory Info<br>    
+                    <input type="checkbox" name="Disk"> Disk Info<br>    
+                </div>
+            </form>
+            <hr class="hr_form">
+            <button class="lil_button" onclick="checkAll(true)">Check All</button>
+            <button class="lil_button" onclick="checkAll(false)">Uncheck All</button>
+        </div>       
+        <div class="info_area">
+            <div class="info">{{info | safe}}</div>
+        </div>
+</body>
+<script>
+function checkAll(bool){
+    elem = document.getElementsByTagName("input")
+    for(let index = 0; index < elem.length; index++){
+        elem[index].checked = bool
+    }
+}
+function checkList(list){
+    console.log(list)
+    for(let index = 0; index < list.length; index++){
+        elem = document.getElementsByName(list[index])[0]
+        elem.checked = true
+    }
+}
+</script>
+</html>
