@@ -1,25 +1,48 @@
 '''
 Thread manager for downloading and removed images in lesson 7\n
-Main functions are downloadWithThreads and removeWithThreads\n
-Also you can use imgNames
+Main function is mainThread
 '''
 # other libs
 from threading import Thread
 from rich.console import Console
 # my libs
-from fileManager import download, remove
+from myParser import getImageListByUrl
+from fileManager import makeFolder, download, removeFolder, addFolderToZip
 
 log = Console().log
-imgNames = []
 
 
-# main finctions
-def downloadWithThreads(images: list[str]):
+# main finction
+def mainThread(url: str, folder_name: str):
+    """Makes new thread for downloading images into new maked folder, adding this folder to archive and removing it"""
+    thread = Thread(target = taskForMainThread, args=(url, folder_name, ))
+
+    thread.start()
+
+    thread.join()
+
+
+
+# helpful function
+def taskForMainThread(url: str, folder_name: str):
+    '''Downloads images into maked folder, adds this folder to archive and removes it'''
+    
+    images = getImageListByUrl(url)
+
+    downloadWithThreads(images, folder_name)
+
+    addFolderToZip(folder_name)
+
+    removeFolder(folder_name)
+
+
+def downloadWithThreads(images: list[str], folder_name):
     '''Manages threads for downloading list of images'''
     threads = []
-
+    makeFolder(folder_name)
+    
     for image in images:
-        threads.append(Thread(target = taskForDownloadingInThread, args=(image, )))
+        threads.append(Thread(target = download, args=(image, folder_name, )))
 
     log("Number of threads for downloading: " + str(len(threads)))
     for thread in threads:
@@ -27,25 +50,3 @@ def downloadWithThreads(images: list[str]):
 
     for thread in threads:
         thread.join()
-
-
-def removeWithThreads(imageNames: list[str]):
-    '''Manages threads for downloading list of images'''
-    threads = []
-
-    for image in imageNames:
-        threads.append(Thread(target = remove, args=(image, )))
-
-    log("Number of threads for removing: " + str(len(threads)))
-    for thread in threads:
-        thread.start()
-
-    for thread in threads:
-        thread.join()
-
-# helpful function
-def taskForDownloadingInThread(image):
-    '''Downloads, adds to zip and removes image'''
-    imgName = download(image)
-    if imgName:
-        imgNames.append(imgName)

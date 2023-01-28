@@ -70,8 +70,12 @@ function send_url(){
         xhttp.onload = function() {
         display_download();
         }
-        console.log(back_url + "getUrl?url=" + url)
-        xhttp.open("GET", back_url + "getUrl?url=" + url, true);
+
+        name = generate_archive_name();
+        // giving url for downloading from back
+        document.getElementById("link").href = back_url + "download?folderName=" + name
+
+        xhttp.open("GET", back_url + "getUrl?url=" + url + "&folderName=" + name, true);
         xhttp.send();
     }
 }
@@ -112,6 +116,19 @@ function display_download(bool = true){
     // making unvisible if we need
     }else
         document.getElementsByClassName('download')[0].style = "display: none;"
+}
+
+function generate_archive_name(len = 15){
+    // str with following characters in name
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let name = ""
+    
+    for(let index = 0; index < len; index++){
+        name += characters[Math.floor(Math.random() * characters.length)]
+    }
+
+    return name
+
 }
 </script>
 </html>
