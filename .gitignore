@@ -1,4 +1,6 @@
+# auto creating folders for better work
 __pycache__/
+.vscode/
 
 # virtual enviroment folders
 virtualEnv/
