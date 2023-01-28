@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Image zip generator</title>
+<style>
+    body{
+        background-color:rgba(215, 215, 50);
+    }
+    .logo, .link_area, .buttons_area{
+        margin-left: 40px;
+    }
+    .logo{
+        font-size: 250%;
+        color: rgba(0, 0, 0, 0.85);
+    }
+    .link_area{
+        margin-right: 25px;
+        font-size: 140%;
+        width: calc(100% - 100px);
+        background-color:rgb(240, 240, 30);
+        border: 1px dashed black;
+    }
+    .gen_button, .download{
+        font-size: 140%;
+        margin-top: 10px;
+        margin-right: 10px;
+        background-color:rgb(240, 240, 30);
+        border: 1px solid black;
+    }
+    .load{
+        font-size: 140%;
+        display: none;
+    }
+    a{
+        text-decoration: none;
+    } 
+    .download{
+        display: none;
+    }
+</style>
+</head>
+<body>
+    <h1 class="logo">Image Zipper</h1>
+    <input class="link_area" id="url" placeholder="Paste your link here">
+    
+    <div class="buttons_area">
+        <button class="gen_button" onclick="send_url()">Generate zip</button>
+        <load class="load"></load>
+        <a id="link" download>
+            <button class="download" onclick="display_download(false)">Download zip</button>
+        </a>
+    </div>
+</body>
+<script>
+// visible of "loading..." 
+load_visible = false
+
+// getting urls for front and back
+front_url = window.location.protocol + "//" + window.location.hostname + ":8080/";
+back_url = window.location.protocol + "//"+ window.location.hostname + ":8081/";
+
+// giving url for downloading from back
+document.getElementById("link").href = back_url + "images.zip"
+    
+function send_url(){
+    if(!load_visible){
+        display_load()
+        const xhttp = new XMLHttpRequest();
+        url = document.getElementById("url").value;
+        xhttp.onload = function() {
+        display_download();
+        }
+        console.log(back_url + "getUrl?url=" + url)
+        xhttp.open("GET", back_url + "getUrl?url=" + url, true);
+        xhttp.send();
+    }
+}
+
+function display_load(bool = true){
+    // making visible if we need
+    if (bool && !load_visible){
+        display_download(false)
+        document.getElementsByClassName('load')[0].style = "display: inline;"    
+        anim_load()
+        load_visible = true
+    // making unvisible if we need
+    }else if(!bool && load_visible){
+        document.getElementsByClassName('load')[0].style = "display: none;"
+        load_visible = false
+    }
+}
+function anim_load(){
+    // simple animation for load text
+    text = "Loading..."
+    item = document.getElementsByClassName('load')[0]
+    for(let step = 0; step < text.length; step++){
+        setTimeout(() => {
+            item.innerHTML = ""
+            for(let index = 0; index <= step; index++){
+                item.innerHTML += text[index]
+            }
+        }, step * step * 30)
+    }
+    // setTimeout(() => display_download(), 4000)
+}
+
+function display_download(bool = true){
+    // making visible if we need
+    if (bool){
+        document.getElementsByClassName('download')[0].style = "display: inline;"
+        display_load(false)
+    // making unvisible if we need
+    }else
+        document.getElementsByClassName('download')[0].style = "display: none;"
+}
+</script>
+</html>
