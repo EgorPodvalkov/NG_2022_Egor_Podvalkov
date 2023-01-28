@@ -1,4 +1,12 @@
 __pycache__/
-*.txt
+
+# virtual enviroment folders
 virtualEnv/
+frontVEnv/
+backVEnv/
+
+# databases, files and folders with data
+*.txt
 *.db
+*.zip
+images\
